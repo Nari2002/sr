@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env file
+
 
 const express = require('express');
 const multer = require('multer');
@@ -126,6 +126,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server running at http://0.0.0.0:${port}`);
+app.listen(port, () => {
+    console.log('Server is running on port 5000');
 });
