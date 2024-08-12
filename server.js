@@ -1,3 +1,5 @@
+require('dotenv').config(); // Load environment variables from .env file
+
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
@@ -5,12 +7,16 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000; // Use port from environment variables or default to 5000
 
 // Setup multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    const uploadDir = 'uploads/';
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -38,13 +44,13 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 // File where properties will be stored
-const propertiesFilePath = './properties.json';
+const propertiesFilePath = path.join(__dirname, 'properties.json');
 
 // Function to load properties from JSON file
 const loadProperties = () => {
   try {
     if (fs.existsSync(propertiesFilePath)) {
-      const data = fs.readFileSync(propertiesFilePath);
+      const data = fs.readFileSync(propertiesFilePath, 'utf8');
       return JSON.parse(data);
     }
   } catch (error) {
@@ -56,7 +62,7 @@ const loadProperties = () => {
 // Function to save properties to JSON file
 const saveProperties = (properties) => {
   try {
-    fs.writeFileSync(propertiesFilePath, JSON.stringify(properties, null, 2));
+    fs.writeFileSync(propertiesFilePath, JSON.stringify(properties, null, 2), 'utf8');
   } catch (error) {
     console.error('Error writing properties file:', error);
   }
@@ -101,7 +107,7 @@ app.delete('/properties/:id', (req, res) => {
   const property = properties[propertyIndex];
   if (property.image) {
     try {
-      fs.unlinkSync(`.${property.image}`);
+      fs.unlinkSync(path.join(__dirname, property.image));
     } catch (error) {
       console.error('Error deleting image file:', error);
     }
@@ -121,8 +127,5 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(port, '0.0.0.0', () => {
-  if (!fs.existsSync('uploads')) {
-    fs.mkdirSync('uploads');
-  }
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at http://0.0.0.0:${port}`);
 });
