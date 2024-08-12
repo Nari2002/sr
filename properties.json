@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "2bhk",
+    "price": "3lack",
+    "location": "hyd",
+    "sqft": "120",
+    "image": "/uploads/1723428988968.png"
+  },
+  {
+    "id": 2,
+    "name": "3bhk",
+    "price": "80lacks",
+    "location": "madhapur",
+    "sqft": "120",
+    "image": "/uploads/1723429030892.png"
+  },
+  {
+    "id": 3,
+    "name": "1bhk",
+    "price": "30lacks",
+    "location": "hayatnagar",
+    "sqft": "130",
+    "image": "/uploads/1723429064559.png"
+  },
+  {
+    "id": 4,
+    "name": "plot",
+    "price": "2000",
+    "location": "hyd",
+    "sqft": "222",
+    "image": "/uploads/1723430755109.png"
+  },
+  {
+    "id": 5,
+    "name": "apartment",
+    "price": "2000000000",
+    "location": "madhapur",
+    "sqft": "2222",
+    "image": "/uploads/1723430818977.jpg"
+  },
+  {
+    "id": 6,
+    "name": "open plot",
+    "price": "222222",
+    "location": "hyd",
+    "sqft": "222",
+    "image": "/uploads/1723436851036.jpg"
+  }
+]
